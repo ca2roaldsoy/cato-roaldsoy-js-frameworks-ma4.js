@@ -20,6 +20,10 @@ function RecipeList() {
       .finally(() => setSpinnner(false));
   });
 
+  if (spinner) {
+    return <Spinner animation="border" className="spinner" />;
+  }
+
   return false;
 }
 
