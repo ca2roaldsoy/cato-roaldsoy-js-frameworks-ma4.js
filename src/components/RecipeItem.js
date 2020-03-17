@@ -20,4 +20,9 @@ function RecipeItem(props) {
   );
 }
 
+RecipeItem.PropTypes = {
+    image: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired
+}
+
 export default RecipeItem;
