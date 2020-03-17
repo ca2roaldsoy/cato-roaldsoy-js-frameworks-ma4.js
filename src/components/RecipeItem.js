@@ -1,28 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 function RecipeItem(props) {
   return (
     <Card>
-      <Card.Img variant="top" src={props.image} />
+      <Card.Img variant="top" src={props.thumbnail} />
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
-        <Link to={"recipe/" + props.title}>
-          <Button variant="secondary" block>
-            More Info
-          </Button>
-        </Link>
       </Card.Body>
     </Card>
   );
 }
 
-RecipeItem.PropTypes = {
-    image: PropTypes.string.isRequired
-    title: PropTypes.string.isRequired
+RecipeItem.propTypes = {
+  thumbnail: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default RecipeItem;
