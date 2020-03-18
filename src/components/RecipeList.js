@@ -8,28 +8,31 @@ import RecipeItem from "./RecipeItem";
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
-  const [spinner, setSpinnner] = useState([true]);
+  const [load, setLoad] = useState([true]);
 
   useEffect(() => {
     fetch(ApiUrl)
       .then(response => response.json())
-      .then(json => {
-        setRecipes(json.results);
-        setFilteredRecipes(json.results)
+      .then(data => {
+        setRecipes(data.results);
+        setFilteredRecipes(data.results);
       })
       .catch(error => console.log(error))
-      .finally(() => setSpinnner(false));
+      .finally(() => setLoad(false));
   }, []);
 
-  if (spinner) {
-    return <Spinner animation="border" className="spinner" />;
+  if (load) {
+    return (
+      <Spinner animation="border" variant="secondary" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
   }
 
-  const filterRecipes = function (e) {
-
+  const filterRecipes = function(e) {
     const searchValue = e.target.value.toLowerCase();
 
-    const filteredArr = recipes.filter(function (r) {
+    const filteredArr = recipes.filter(function(r) {
       const lowerCaseName = r.name.toLowerCase();
 
       if (lowerCaseName.startsWith(searchValue)) {
@@ -37,11 +40,9 @@ function RecipeList() {
       }
 
       return false;
-
     });
 
-    setFilteredRecipes(filteredArr)
-
+    setFilteredRecipes(filteredArr);
   };
 
   return (
@@ -51,7 +52,7 @@ function RecipeList() {
           const { title, thumbnail } = recipe;
 
           return (
-            <Col sm={6} md={3}>
+            <Col sm={12} md={2} key={title}>
               <RecipeItem title={title} thumbnail={thumbnail} />
             </Col>
           );
