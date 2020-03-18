@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 import { ApiUrl } from "../constants/api";
 import RecipeItem from "./RecipeItem";
+import Search from "./Search";
 
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
@@ -21,6 +22,22 @@ function RecipeList() {
       .finally(() => setLoad(false));
   }, []);
 
+  const filterRecipes = function(e) {
+    const searchValue = e.target.value.toLowerCase();
+
+    const filteredArr = recipes.filter(function(r) {
+      const lowerCaseTitle = r.title.toLowerCase();
+
+      if (lowerCaseTitle.includes(searchValue)) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    setFilteredRecipes(filteredArr);
+  };
+
   if (load) {
     return (
       <Spinner animation="border" variant="secondary" role="status">
@@ -29,24 +46,9 @@ function RecipeList() {
     );
   }
 
-  const filterRecipes = function(e) {
-    const searchValue = e.target.value.toLowerCase();
-
-    const filteredArr = recipes.filter(function(r) {
-      const lowerCaseName = r.name.toLowerCase();
-
-      if (lowerCaseName.startsWith(searchValue)) {
-        return true;
-      }
-
-      return false;
-    });
-
-    setFilteredRecipes(filteredArr);
-  };
-
   return (
     <>
+      <Search handleSearch={filterRecipes} />
       <Row>
         {filteredRecipes.map(recipe => {
           const { title, thumbnail } = recipe;
