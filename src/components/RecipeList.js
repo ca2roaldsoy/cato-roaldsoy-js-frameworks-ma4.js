@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 import { ApiUrl } from "../constants/api";
 import RecipeItem from "./RecipeItem";
-import Search from "./Search";
+import SearchRecipe from "./SearchRecipe";
 
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
@@ -48,7 +48,7 @@ function RecipeList() {
 
   return (
     <>
-      <Search handleSearch={filterRecipes} />
+      <SearchRecipe handleSearch={filterRecipes} />
       <Row>
         {filteredRecipes.map(recipe => {
           const { title, thumbnail } = recipe;
